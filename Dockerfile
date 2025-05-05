@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-
+ENV USER=docker
 # Actualitza i instal·la paquets bàsics
 RUN apt-get update && apt-get install -y \
     sudo xfce4 xfce4-goodies \
@@ -25,12 +25,11 @@ RUN useradd -m -s /bin/bash docker && \
     echo "docker:docker" | chpasswd && \
     usermod -aG sudo docker
 
-    USER docker
-    WORKDIR /home/docker
+USER docker
+WORKDIR /home/docker
     
     # Setup inicial de VNC
     RUN mkdir -p /home/docker/.vnc && \
-        ENV USER=docker \
         echo "docker" | vncpasswd -f > /home/docker/.vnc/passwd && \
         chmod 600 /home/docker/.vnc/passwd
     
@@ -41,4 +40,4 @@ RUN useradd -m -s /bin/bash docker && \
     EXPOSE 5901 22
     
     # Script d'arrencada
-    CMD ["/bin/bash", "-c", "vncserver :1 -geometry 1280x800 -depth 24 && tail -F /home/docker/.vnc/*.log"]
+    CMD service ssh start && vncserver :1 -geometry 1280x800 -depth 24 && tail -F /home/docker/.vnc/*.log

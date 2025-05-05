@@ -13,6 +13,6 @@ docker rm -f $CONTAINER_NAME 2>/dev/null
 
 # Crear i executar contenidor amb ports redirigits
 echo "Executant contenidor..."
-docker run -d --name $CONTAINER_NAME -p 5901:5901 -p 2222:22 $IMAGE_NAME
+docker run -d -p 5901:5901 -p 2244:22 --name $CONTAINER_NAME $IMAGE_NAME
 
 echo "Contenidor en execució. Connecta't via VNC a localhost:5901"
