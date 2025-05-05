@@ -30,6 +30,7 @@ RUN useradd -m -s /bin/bash docker && \
     
     # Setup inicial de VNC
     RUN mkdir -p /home/docker/.vnc && \
+        ENV USER=docker \
         echo "docker" | vncpasswd -f > /home/docker/.vnc/passwd && \
         chmod 600 /home/docker/.vnc/passwd
     
