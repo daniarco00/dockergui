@@ -14,10 +14,9 @@ Aquest repositori conté la configuració Docker per crear un entorn gràfic Ubu
 - Client SSH (opcional)
 
 ## Contingut del repositori
-.
-├── Dockerfile # Configuració de la imatge Docker
-├── build_and_run.sh # Script per construir i executar el contenidor
-└── README.md # Aquest arxiu
+- Dockerfile - Configuració de la imatge Docker
+- build_and_run.sh - Script per construir i executar el contenidor
+- README.md - Aquest arxiu
 
 
 ## Configuració bàsica
