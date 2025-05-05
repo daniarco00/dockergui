@@ -24,3 +24,20 @@ RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor 
 RUN useradd -m -s /bin/bash docker && \
     echo "docker:docker" | chpasswd && \
     usermod -aG sudo docker
+
+    USER docker
+    WORKDIR /home/docker
+    
+    # Setup inicial de VNC
+    RUN mkdir -p /home/docker/.vnc && \
+        echo "docker" | vncpasswd -f > /home/docker/.vnc/passwd && \
+        chmod 600 /home/docker/.vnc/passwd
+    
+    # Fitxer per iniciar XFCE amb VNC
+    RUN echo "#!/bin/bash\nstartxfce4 &" > /home/docker/.vnc/xstartup && \
+        chmod +x /home/docker/.vnc/xstartup
+    
+    EXPOSE 5901 22
+    
+    # Script d'arrencada
+    CMD ["/bin/bash", "-c", "vncserver :1 -geometry 1280x800 -depth 24 && tail -F /home/docker/.vnc/*.log"]
